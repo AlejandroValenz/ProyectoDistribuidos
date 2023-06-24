@@ -1,0 +1,7 @@
+AuxServer.class
+networking/WebClient.class
+com/mycompany/app/App.class
+com/mycompany/app/FrontendSearchRequest.class
+networking/Aggregator.class
+com/mycompany/app/FrontendSearchResponse.class
+com/mycompany/app/WebServer.class
