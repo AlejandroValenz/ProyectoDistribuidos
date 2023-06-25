@@ -122,7 +122,7 @@ public class AuxServer {
             
             //String a = "Ejemplo.txt";
             String a = "Adler_Olsen,_Jussi__1997_._La_casa_del_alfabeto_[7745].txt";
-            String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
+            String path = "/mnt/c/Users/paole/OneDrive/Escritorio/ESCOM/Distribuidos/Proyect_final/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
             //FileReader texto = new FileReader("/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/java/com/mycompany/app/" + a);
             //String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/java/com/mycompany/app/" + a;
             BufferedReader miBuffer = new BufferedReader( new InputStreamReader(new FileInputStream(path), "UTF-8") );
