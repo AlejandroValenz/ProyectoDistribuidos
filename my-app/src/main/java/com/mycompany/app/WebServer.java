@@ -143,8 +143,9 @@ public class WebServer {
             Aggregator aggregator = new Aggregator();
             
             System.out.println("Frase recibida: " + frase);
+            /*Imprime las palabras de la prase
             for(String palabra: palabrasFrase)
-                System.out.println(palabra);
+                System.out.println(palabra);*/
 
             /*SendTasksToWorkers envia todas las tareas a los servidores.
             Utiliza dos arreglos, uno para los servidores y otro para las tareas*/

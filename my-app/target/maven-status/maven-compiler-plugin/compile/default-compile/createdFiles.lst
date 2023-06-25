@@ -1,4 +1,6 @@
 com/mycompany/app/App.class
+Libro.class
+SortByOcurrencias.class
 networking/Aggregator.class
 com/mycompany/app/FrontendSearchRequest.class
 AuxServer.class

@@ -16,6 +16,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.ArrayList;
 
 public class AuxServer {
 
@@ -104,9 +107,64 @@ public class AuxServer {
         System.out.println("------------------------------------------------");
         String bodyString = new String(requestBytes);
         String[] stringWords = bodyString.split(" ");
-        String linea = "";
+        String[] books = {"Adler_Olsen,_Jussi__1997_._La_casa_del_alfabeto_[7745].txt",
+                "Adler,_Elizabeth__1991_._La_esmeralda_de_los_Ivanoff_[10057].txt",
+                "Aguilera,_Juan_Miguel__1998_._La_locura_de_Dios_[5644].txt",
+                "Alameddine,_Rabih__2008_._El_contador_de_historias_[5735].txt",
+                "Albom,_Mitch__2002_._Martes_con_mi_viejo_profesor_[382].txt",
+                "Alcott,_Louisa_May__1868_._Mujercitas_[11086].txt",
+                "Alcott,_Louisa_May__1871_._Hombrecitos_[15392].txt",
+                "Alders,_Hanny__1987_._El_tesoro_de_los_templarios_[13014].txt",
+                "Alexander,_Caroline__1998_._Atrapados_en_el_hielo_[15727].txt",
+                "Allende,_Isabel__1982_._La_casa_de_los_espíritus_[563].txt",
+                "Allende,_Isabel__1984_._De_amor_y_de_sombra_[6283].txt",
+                "Alten,_Steve__2001_.__Trilogía_maya_01__El_testamento_maya_[8901].txt",
+                "Alten,_Steve__2008_._Al_borde_del_infierno_[12141].txt",
+                "Amis,_Martin__1990_._Los_monstruos_de_Einstein_[8080].txt",
+                "Anderson,_Sienna__2008_._No_me_olvides_[15047].txt",
+                "Anónimo__1554_._Lazarillo_de_Tormes_[11043].txt",
+                "Anónimo__2004_._Robin_Hood_[11853].txt",
+                "Archer,_Jeffrey__1979_._Kane_y_Abel_[1965].txt",
+                "Asimov,_Isaac__1950_._Yo,_robot_[10874].txt",
+                "Asimov,_Isaac__1967_._Guía_de_la_Biblia__Antiguo_Testamento__[6134].txt",
+                "Asimov,_Isaac__1985_._El_monstruo_subatómico_[167].txt",
+                "Bach,_Richard__1970_._Juan_Salvador_Gaviota_[15399].txt",
+                "Baum,_Lyman_Frank__1900_._El_Mago_de_Oz_[15715].txt",
+                "Beevor,_Antony__1998_._Stalingrado_[10491].txt",
+                "Benítez,_J._J.__1984_.__Caballo_de_Troya_01__Jerusalén_[4826].txt",
+                "Dickens,_Charles__1843_._Cuento_de_Navidad_[3285].txt",
+                "Dostoievski,_Fiódor__1865_._Crimen_y_castigo_[13400].txt",
+                "Ende,_Michael__1973_._Momo_[1894].txt",
+                "Esquivel,_Laura__1989_._Como_agua_para_chocolate_[7750].txt",
+                "Flaubert,_Gustave__1857_._Madame_Bovary_[3067].txt",
+                "Fromm,_Erich__1947_._El_miedo_a_la_libertad_[11619].txt",
+                "Gaarder,_Jostein__1991_._El_mundo_de_Sofía_[6571].txt",
+                "Gaiman,_Neil__2002_._Coraline_[1976].txt",
+                "García_Márquez,_Gabriel__1967_._Cien_años_de_soledad_[8376].txt",
+                "García_Márquez,_Gabriel__1985_._El_amor_en_los_tiempos_del_cólera_[874].txt",
+                "García_Márquez,_Gabriel__1989_._El_general_en_su_laberinto_[875].txt",
+                "Golding,_William__1954_._El_señor_de_las_moscas_[6260].txt",
+                "Goleman,_Daniel__1995_._Inteligencia_emocional_[4998].txt",
+                "Gorki,_Máximo__1907_._La_madre_[1592].txt",
+                "Harris,_Thomas__1988_._El_silencio_de_los_inocentes_[11274].txt",
+                "Hawking,_Stephen__1988_._Historia_del_tiempo_[8536].txt",
+                "Hemingway,_Ernest__1952_._El_viejo_y_el_mar_[1519].txt",
+                "Hesse,_Herman__1919_._Demian_[2612].txt",
+                "Hitler,_Adolf__1935_._Mi_lucha_[11690].txt",
+                "Hobbes,_Thomas__1651_._Leviatán_[2938].txt",
+                "Huxley,_Aldous__1932_._Un_mundo_feliz_[293].txt"};
 
+        String linea = "";
+        int count = 0;
+        int palabrasTotales = 0;
+        double fdt;
+
+        //Almacema < Palabra, Apariciones >
         LinkedHashMap<String, Integer> listaPalabras = new LinkedHashMap<>();
+        //Almacena < Libro, fdt >
+        LinkedHashMap<String, Double> listaOcurrencias = new LinkedHashMap<>();
+        //Almacena < Libro, fdt >
+        ArrayList<Libro> result = new ArrayList<Libro>();
         
         //Agregamos cuales seran las palbras a buscar en el texto
         for (String palabra : stringWords) {
@@ -114,56 +172,73 @@ public class AuxServer {
         }
 
         System.out.println("Palabras al inicio:" + listaPalabras);
-
-        try{
-            
-            //Indicamos la ruta del archivo de lectura
-            
-            //String a = "Ejemplo.txt";
-            String a = "Adler_Olsen,_Jussi__1997_._La_casa_del_alfabeto_[7745].txt";
-            String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
-            //FileReader texto = new FileReader("/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/java/com/mycompany/app/" + a);
-            //String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/java/com/mycompany/app/" + a;
-            BufferedReader miBuffer = new BufferedReader( new InputStreamReader(new FileInputStream(path), "UTF-8") );
-            
-            while ( (linea = miBuffer.readLine()) != null ){
-                //System.out.println("Entrada while");
+        for(String a : books){
+            try{
                 
-                String[] palabra = linea.toLowerCase().split(" ");
+                String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
 
-                for(String palabraAnalisis : palabra){
-                    //Quitamos los signos de puntuación a las palabras
-                    palabraAnalisis = palabraAnalisis.replaceAll(",","");
-                    palabraAnalisis = palabraAnalisis.replaceAll("\\.","");
-                    palabraAnalisis = palabraAnalisis.replaceAll(";","");
-                    palabraAnalisis = palabraAnalisis.replaceAll(":","");
-                    palabraAnalisis = palabraAnalisis.replaceAll("\\)","");
-                    palabraAnalisis = palabraAnalisis.replaceAll("!","");
-                    palabraAnalisis = palabraAnalisis.replaceAll("-","");
-                    palabraAnalisis = palabraAnalisis.replaceAll("\\?","");
-                    //System.out.println("Entrada for1");
-                    for(Map.Entry<String, Integer> mapa : listaPalabras.entrySet()){
-                        //System.out.println("Entrada for2");
-                        if(palabraAnalisis.equalsIgnoreCase(mapa.getKey())){
-                            //System.out.println("Analisis: " + palabraAnalisis + " Map: " + mapa.getValue());
-                            listaPalabras.put(palabraAnalisis, mapa.getValue() + 1);
-                        } else {
-                            //System.out.println("Analisis: " + palabraAnalisis + " Map: " + mapa.getValue());
+                BufferedReader miBuffer = new BufferedReader( new InputStreamReader(new FileInputStream(path), "UTF-8") );
+                
+                while ( (linea = miBuffer.readLine()) != null ){
+                    //System.out.println("Entrada while");
+                    
+                    String[] palabra = linea.toLowerCase().split(" ");
+
+                    for(String palabraAnalisis : palabra){
+                        //Quitamos los signos de puntuación a las palabras
+                        palabraAnalisis = palabraAnalisis.replaceAll(",","");
+                        palabraAnalisis = palabraAnalisis.replaceAll("\\.","");
+                        palabraAnalisis = palabraAnalisis.replaceAll(";","");
+                        palabraAnalisis = palabraAnalisis.replaceAll(":","");
+                        palabraAnalisis = palabraAnalisis.replaceAll("\\)","");
+                        palabraAnalisis = palabraAnalisis.replaceAll("!","");
+                        palabraAnalisis = palabraAnalisis.replaceAll("-","");
+                        palabraAnalisis = palabraAnalisis.replaceAll("\\?","");
+                        //System.out.println("Entrada for1");
+                        palabrasTotales++;
+                        for(Map.Entry<String, Integer> mapa : listaPalabras.entrySet()){
+                            //System.out.println("Entrada for2");
+                            if(palabraAnalisis.equalsIgnoreCase(mapa.getKey())){
+                                //System.out.println("Analisis: " + palabraAnalisis + " Map: " + mapa.getValue());
+                                listaPalabras.put(palabraAnalisis, mapa.getValue() + 1);
+                                count++;
+                            } else {
+                                //System.out.println("Analisis: " + palabraAnalisis + " Map: " + mapa.getValue());
+                            }
+                            
                         }
                         
                     }
-                    
-                }
 
-            }
+                }
+                System.out.println("Puntuacion: " + count);
+                System.out.println("Palabras totales: " + palabrasTotales);
                 System.out.println("Texto analizado.");
-                //texto.close();
-                
-        } catch (IOException e) {
-            System.out.println("Error lectura");
+                fdt = (double)count / (double)palabrasTotales;
+                listaOcurrencias.put(a, fdt);
+                    
+            } catch (IOException e) {
+                System.out.println("Error lectura");
+            }
         }
 
-        System.out.println("Palabras al final:" + listaPalabras);
+        for(Map.Entry<String, Double> mapaToResult : listaOcurrencias.entrySet()){
+            
+            result.add(new Libro(mapaToResult.getKey(), mapaToResult.getValue()));
+
+        }
+        
+        System.out.println("Original");
+        for(int i = 0; i < result.size(); i ++)
+            System.out.println(result.get(i));
+        
+        Comparator c
+            = Collections.reverseOrder(new SortByOcurrencias());
+        Collections.sort(result, c);
+        
+        System.out.println("Orden");
+        for(int i = 0; i < result.size(); i ++)
+            System.out.println(result.get(i));
 
         return bodyString.getBytes();
     }
