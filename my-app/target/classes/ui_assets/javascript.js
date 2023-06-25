@@ -43,9 +43,11 @@ $( document ).ready(function() {
         var cantidad = data.cantidad;
         var cadena = data.cadena;*/
         var frase = data.frase;
-        var cadena = data.cadena;
+        /*Aquí se almacenan las 3 opciones de libros*/
+        var libro1 = data.libro1;
+        var libro2 = data.libro2;
+        var libro3 = data.libro3;
         resultsWrapper.show();
-        resultsTable.append("<thead><tr><th>Frase   </th><th>   Cadena</th></tr></thead><tr><td>" + frase + "</td><td>" + cadena + "</td></tr>");
+        resultsTable.append("<thead><tr><th>Frase </th><th>Libro con mas coincidencias</th><th>Libro con coincidencias moderadas</th><th>Libro con menos coincidencias</th></tr></thead><tr><td>" + frase + "</td><td>" + libro1 + "</td><td>"+libro2+"</td><td>"+libro3+"</td></tr>");
     }
 });
-

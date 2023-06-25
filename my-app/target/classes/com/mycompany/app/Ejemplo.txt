@@ -1,0 +1,10 @@
+Palabra
+de
+ejemplo
+ejemplo
+Palabra
+palabra
+palabra:
+palabra,
+palabra.
+palabra;

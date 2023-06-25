@@ -1,4 +1,4 @@
-package networking;
+package com.mycompany.app.networking;
 
 import java.net.URI;
 import java.net.http.HttpClient;

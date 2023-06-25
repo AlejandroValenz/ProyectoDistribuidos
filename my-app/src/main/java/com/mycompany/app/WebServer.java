@@ -24,8 +24,6 @@
 
 package com.mycompany.app;
 
-import networking.Aggregator;
-
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
@@ -42,7 +40,7 @@ import java.lang.*;
 import java.util.Arrays;
 import java.util.List;
 
-import networking.Aggregator;
+import com.mycompany.app.networking.Aggregator;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;   
 import com.fasterxml.jackson.databind.ObjectMapper;             
@@ -148,15 +146,18 @@ public class WebServer {
 
             /*SendTasksToWorkers envia todas las tareas a los servidores.
             Utiliza dos arreglos, uno para los servidores y otro para las tareas*/
+            /* envia la frase a los 3 procesadores para que cada procesador busque en el conjunto de libros que tiene asignado */
             List<String> results = aggregator.sendTasksToWorkers(Arrays.asList(WORKER_ADDRESS_1, WORKER_ADDRESS_2, WORKER_ADDRESS_3), Arrays.asList(frase, frase, frase));
 
             //Recibe e imprime los resultados obtenidos
             for(String result: results){
                 System.out.println("Valor obtenido: " + result);
+                /* aquí va a recibir las 3 opciones de cada busqueda y va a comprarar las que tengan más incidencias */
             }
 
+            String libro1 ="",libro2="",libro3=""; /* Aquí estan los nombres de los libros que se mostraran  */
             /*FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase, calculateResponse(frase.getBytes()));*/
-            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase, frase);
+            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase, libro1, libro2, libro3);
             byte[] responseBytes = objectMapper.writeValueAsBytes(frontendSearchResponse);
             sendResponse(responseBytes, exchange);
 
@@ -185,7 +186,7 @@ public class WebServer {
     }
 
     //Metodo 'calculateResponse' el cual multiplica los numeros de tipo bigInteger
-    private BigInteger calculateResponse(byte[] requestBytes) {
+    /* private BigInteger calculateResponse(byte[] requestBytes) {
         String bodyString = new String(requestBytes);
         String[] stringNumbers = bodyString.split(",");
 
@@ -198,7 +199,5 @@ public class WebServer {
         System.out.println("Resultado de la operación: " + result);
 
         return result;
-    }
+    } */
 }
-
-

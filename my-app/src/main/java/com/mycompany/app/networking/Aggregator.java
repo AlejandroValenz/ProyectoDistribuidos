@@ -1,6 +1,6 @@
-package networking;
+package com.mycompany.app.networking;
 
-import networking.WebClient;
+import com.mycompany.app.networking.WebClient;
 
 import java.util.List;
 import java.util.ArrayList;

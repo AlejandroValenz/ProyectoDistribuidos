@@ -28,18 +28,30 @@ import java.math.BigInteger;
 
 public class FrontendSearchResponse {
         private String frase;
-        private String cadena;
+        private String libro1;
+        private String libro2;
+        private String libro3;
 
-        public FrontendSearchResponse(String frase, String cadena) {
+        public FrontendSearchResponse(String frase, String libro1, String libro2, String libro3) {
             this.frase = frase;
-            this.cadena = cadena;
+            this.libro1= libro1;
+            this.libro2= libro2;
+            this.libro3= libro3;
         }
 
         public String getfrase() {
             return frase;
         }
 
-        public String getcadena() {
-            return cadena;
+        public String getLibro1() {
+            return libro1;
         }
+
+        public String getLibro2() {
+            return libro2;
+        }
+        public String getLibro3() {
+            return libro3;
+        }
+
 }
