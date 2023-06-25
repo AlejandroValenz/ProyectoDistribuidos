@@ -109,7 +109,7 @@ public class AuxServer {
         String[] stringWords = bodyString.split(" ");
         String[] books = {"Adler_Olsen,_Jussi__1997_._La_casa_del_alfabeto_[7745].txt",
                 "Adler,_Elizabeth__1991_._La_esmeralda_de_los_Ivanoff_[10057].txt",
-                "Aguilera,_Juan_Miguel__1998_._La_locura_de_Dios_[5644].txt",
+                "Aguilera,_Juan_Miguel__1998_._La_locura_de_Dios_[5644].txt"/*,
                 "Alameddine,_Rabih__2008_._El_contador_de_historias_[5735].txt",
                 "Albom,_Mitch__2002_._Martes_con_mi_viejo_profesor_[382].txt",
                 "Alcott,_Louisa_May__1868_._Mujercitas_[11086].txt",
@@ -152,12 +152,7 @@ public class AuxServer {
                 "Hesse,_Herman__1919_._Demian_[2612].txt",
                 "Hitler,_Adolf__1935_._Mi_lucha_[11690].txt",
                 "Hobbes,_Thomas__1651_._Leviatán_[2938].txt",
-                "Huxley,_Aldous__1932_._Un_mundo_feliz_[293].txt"};
-
-        String linea = "";
-        int count = 0;
-        int palabrasTotales = 0;
-        double fdt;
+                "Huxley,_Aldous__1932_._Un_mundo_feliz_[293].txt"*/};
 
         //Almacema < Palabra, Apariciones >
         LinkedHashMap<String, Integer> listaPalabras = new LinkedHashMap<>();
@@ -165,14 +160,18 @@ public class AuxServer {
         LinkedHashMap<String, Double> listaOcurrencias = new LinkedHashMap<>();
         //Almacena < Libro, fdt >
         ArrayList<Libro> result = new ArrayList<Libro>();
-        
-        //Agregamos cuales seran las palbras a buscar en el texto
-        for (String palabra : stringWords) {
-            listaPalabras.put(palabra.toLowerCase(), 0);
-        }
 
-        System.out.println("Palabras al inicio:" + listaPalabras);
         for(String a : books){
+            String linea = "";
+            int count = 0;
+            int palabrasTotales = 0;
+            double fdt = 0.0;
+            //Agregamos cuales seran las palbras a buscar en el texto
+            for (String palabra : stringWords) {
+                listaPalabras.put(palabra.toLowerCase(), 0);
+            }
+            System.out.println("Palabras al inicio:" + listaPalabras);
+        
             try{
                 
                 String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
@@ -213,9 +212,12 @@ public class AuxServer {
                 }
                 System.out.println("Puntuacion: " + count);
                 System.out.println("Palabras totales: " + palabrasTotales);
-                System.out.println("Texto analizado.");
-                fdt = (double)count / (double)palabrasTotales;
+                fdt = fdt + ((double)count / (double)palabrasTotales);
+                System.out.println("FDT: " + fdt);
                 listaOcurrencias.put(a, fdt);
+                System.out.println("Texto analizado.");
+                System.out.println("Palabras al final:" + listaPalabras);
+                System.out.println("--------------------------");
                     
             } catch (IOException e) {
                 System.out.println("Error lectura");
