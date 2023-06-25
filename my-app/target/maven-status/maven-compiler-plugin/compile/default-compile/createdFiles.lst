@@ -1,4 +1,6 @@
 com/mycompany/app/App.class
+Libro.class
+SortByOcurrencias.class
 com/mycompany/app/FrontendSearchRequest.class
 AuxServer.class
 com/mycompany/app/FrontendSearchResponse.class
