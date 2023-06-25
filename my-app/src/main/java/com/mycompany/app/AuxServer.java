@@ -11,6 +11,11 @@ import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.*;
 import java.lang.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
 
 public class AuxServer {
 
@@ -99,12 +104,66 @@ public class AuxServer {
         System.out.println("------------------------------------------------");
         String bodyString = new String(requestBytes);
         String[] stringWords = bodyString.split(" ");
+        String linea = "";
 
-        System.out.println("Frase recibida: " + bodyString);
+        LinkedHashMap<String, Integer> listaPalabras = new LinkedHashMap<>();
         
+        //Agregamos cuales seran las palbras a buscar en el texto
         for (String palabra : stringWords) {
-            System.out.println(palabra);
+            listaPalabras.put(palabra.toLowerCase(), 0);
         }
+
+        System.out.println("Palabras al inicio:" + listaPalabras);
+
+        try{
+            
+            //Indicamos la ruta del archivo de lectura
+            
+            //String a = "Ejemplo.txt";
+            String a = "Adler_Olsen,_Jussi__1997_._La_casa_del_alfabeto_[7745].txt";
+            String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
+            //FileReader texto = new FileReader("/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/java/com/mycompany/app/" + a);
+            //String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/java/com/mycompany/app/" + a;
+            BufferedReader miBuffer = new BufferedReader( new InputStreamReader(new FileInputStream(path), "UTF-8") );
+            
+            while ( (linea = miBuffer.readLine()) != null ){
+                //System.out.println("Entrada while");
+                
+                String[] palabra = linea.toLowerCase().split(" ");
+
+                for(String palabraAnalisis : palabra){
+                    //Quitamos los signos de puntuación a las palabras
+                    palabraAnalisis = palabraAnalisis.replaceAll(",","");
+                    palabraAnalisis = palabraAnalisis.replaceAll("\\.","");
+                    palabraAnalisis = palabraAnalisis.replaceAll(";","");
+                    palabraAnalisis = palabraAnalisis.replaceAll(":","");
+                    palabraAnalisis = palabraAnalisis.replaceAll("\\)","");
+                    palabraAnalisis = palabraAnalisis.replaceAll("!","");
+                    palabraAnalisis = palabraAnalisis.replaceAll("-","");
+                    palabraAnalisis = palabraAnalisis.replaceAll("\\?","");
+                    //System.out.println("Entrada for1");
+                    for(Map.Entry<String, Integer> mapa : listaPalabras.entrySet()){
+                        //System.out.println("Entrada for2");
+                        if(palabraAnalisis.equalsIgnoreCase(mapa.getKey())){
+                            //System.out.println("Analisis: " + palabraAnalisis + " Map: " + mapa.getValue());
+                            listaPalabras.put(palabraAnalisis, mapa.getValue() + 1);
+                        } else {
+                            //System.out.println("Analisis: " + palabraAnalisis + " Map: " + mapa.getValue());
+                        }
+                        
+                    }
+                    
+                }
+
+            }
+                System.out.println("Texto analizado.");
+                //texto.close();
+                
+        } catch (IOException e) {
+            System.out.println("Error lectura");
+        }
+
+        System.out.println("Palabras al final:" + listaPalabras);
 
         return bodyString.getBytes();
     }
