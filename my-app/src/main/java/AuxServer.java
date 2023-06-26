@@ -1,3 +1,4 @@
+import com.mycompany.app.FrontendSearchResponse;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -175,7 +176,7 @@ public class AuxServer {
         for(String a : books){
             try{
                 
-                String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
+                String path = "/mnt/c/Users/paole/OneDrive/Escritorio/ESCOM/Distribuidos/Proyect_final/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
 
                 BufferedReader miBuffer = new BufferedReader( new InputStreamReader(new FileInputStream(path), "UTF-8") );
                 
@@ -237,9 +238,23 @@ public class AuxServer {
         Collections.sort(result, c);
         
         System.out.println("Orden");
-        for(int i = 0; i < result.size(); i ++)
+        
+for(int i = 0; i < result.size(); i ++)
             System.out.println(result.get(i));
+        /* creo un vector tipo string para guardar los 3 titulos con mayor incidencia */
+        String libros[];
+        libros = new String[3];
 
+        System.out.println("Los 3 resultados con mayor tdf son: ");
+        
+        for(int i = 0; i < 3; i++){
+            libros[i]=result.get(i).toString();
+            System.out.println(libros[i]);
+        }
+        /* webServer */
+        FrontendSearchResponse res = new FrontendSearchResponse("");
+        res.getNames(libros[0], libros[1], libros[2]);
+        
         return bodyString.getBytes();
     }
 

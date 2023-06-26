@@ -27,12 +27,12 @@ package com.mycompany.app;
 
 public class FrontendSearchResponse {
         
-        private String libro1;
+        private String libro1,frase;
         private String libro2;
         private String libro3;
 
-         public FrontendSearchResponse ( ) {
-            
+         public  FrontendSearchResponse (String frase ) {
+            this.frase = frase;         
         }
         public void getNames(String libro1, String libro2, String libro3) {
             this.libro1= libro1;

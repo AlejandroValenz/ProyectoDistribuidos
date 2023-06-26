@@ -151,12 +151,12 @@ public class WebServer {
             //Recibe e imprime los resultados obtenidos
             for(String result: results){
                 System.out.println("Valor obtenido: " + result);
-                /* aquí va a recibir las 3 opciones de cada busqueda y va a comprarar las que tengan más incidencias */
+               
             }
             /* Aquí estan los nombres de los libros que se mostraran  */
             /*FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase, calculateResponse(frase.getBytes()));*/
         
-            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse();
+            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase);
 
             byte[] responseBytes = objectMapper.writeValueAsBytes(frontendSearchResponse);
 
@@ -187,10 +187,6 @@ public class WebServer {
     }
     
 
-
-<<<<<<< HEAD
 }
-=======
 
 
->>>>>>> 67983638609d0539b8610202ee8dd244fb169820
