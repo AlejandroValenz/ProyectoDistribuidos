@@ -6,6 +6,4 @@ gnome-terminal -- java AuxServer 3001
 gnome-terminal -- java AuxServer 3002
 gnome-terminal -- java AuxServer 3003
 
-cd ..
-cd ..
 
