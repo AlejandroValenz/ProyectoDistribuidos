@@ -1,26 +1,31 @@
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.*;
+import java.lang.*;
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
-
-import com.mycompany.app.FrontendSearchResponse;
-import com.mycompany.app.WebServer;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.ArrayList;
 
 public class AuxServer {
-    
+
     /*
         Definimos las dos cadenas de los endpoints del servidor
     */
     private static final String ENDPOINT_PROCESS = "/procesar_datos";
-	public static final int DEFAULT_PORT = 0;
 
     /*
         Variables del servidor.
@@ -90,7 +95,6 @@ public class AuxServer {
             byte[] requestBytes = exchange.getRequestBody().readAllBytes();
             byte[] responseBytes = String.format("Palabra del servidor de procesamiento: %s\n", calculateResponse(requestBytes)).getBytes();
             sendResponse(responseBytes, exchange);
-            
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -171,7 +175,7 @@ public class AuxServer {
         for(String a : books){
             try{
                 
-                String path = "/mnt/c/Users/paole/OneDrive/Escritorio/ESCOM/Distribuidos/Proyect_final/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
+                String path = "/mnt/c/Users/Alejandro/Desktop/ProyectoDistribuidos/my-app/src/main/resources/books/" + a;
 
                 BufferedReader miBuffer = new BufferedReader( new InputStreamReader(new FileInputStream(path), "UTF-8") );
                 
@@ -179,7 +183,7 @@ public class AuxServer {
                     //System.out.println("Entrada while");
                     
                     String[] palabra = linea.toLowerCase().split(" ");
-                    
+
                     for(String palabraAnalisis : palabra){
                         //Quitamos los signos de puntuación a las palabras
                         palabraAnalisis = palabraAnalisis.replaceAll(",","");
@@ -195,7 +199,6 @@ public class AuxServer {
                         for(Map.Entry<String, Integer> mapa : listaPalabras.entrySet()){
                             //System.out.println("Entrada for2");
                             if(palabraAnalisis.equalsIgnoreCase(mapa.getKey())){
-                                
                                 //System.out.println("Analisis: " + palabraAnalisis + " Map: " + mapa.getValue());
                                 listaPalabras.put(palabraAnalisis, mapa.getValue() + 1);
                                 count++;
@@ -234,28 +237,10 @@ public class AuxServer {
         Collections.sort(result, c);
         
         System.out.println("Orden");
-
-
-
-
         for(int i = 0; i < result.size(); i ++)
             System.out.println(result.get(i));
-        /* creo un vector tipo string para guardar los 3 titulos con mayor incidencia */
-        String libros[];
-        libros = new String[3];
 
-        System.out.println("Los 3 resultados con mayor tdf son: ");
-        
-        for(int i = 0; i < 3; i++){
-            libros[i]=result.get(i).toString();
-            System.out.println(libros[i]);
-        }
-        /* webServer */
-        FrontendSearchResponse res = new FrontendSearchResponse();
-        res.getNames(libros[0], libros[1], libros[2]);
-        
         return bodyString.getBytes();
-        
     }
 
     //Metodo 'sendResponse' agrega el status code 200 (estado de exito) y la longitud de la respuesta
@@ -273,6 +258,4 @@ public class AuxServer {
         exchange.close();
     }
 
-
-    
 }
