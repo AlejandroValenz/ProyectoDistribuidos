@@ -1,3 +1,4 @@
+package com.mycompany.app;
 /*
  *  MIT License
  *
@@ -22,11 +23,9 @@
  *  SOFTWARE.
  */
 
-package com.mycompany.app;
+
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class App {
 

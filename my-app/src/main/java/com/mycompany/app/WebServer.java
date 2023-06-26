@@ -1,3 +1,4 @@
+package com.mycompany.app;
 /*
  *  MIT License
  *
@@ -22,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package com.mycompany.app;
+
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -33,20 +34,18 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.io.InputStream;  
-import java.util.StringTokenizer;
-import java.math.BigInteger;
-import java.util.*;
-import java.lang.*;
 import java.util.Arrays;
 import java.util.List;
 
 import com.mycompany.app.networking.Aggregator;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;   
-import com.fasterxml.jackson.databind.ObjectMapper;             
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;   
+import com.fasterxml.jackson.databind.ObjectMapper;   
 
 public class WebServer {
+        private String libro1;
+        private String libro2;
+        private String libro3;
    
     private static final String STATUS_ENDPOINT = "/status";
     private static final String HOME_PAGE_ENDPOINT = "/";
@@ -135,7 +134,6 @@ public class WebServer {
             
             FrontendSearchRequest frontendSearchRequest = objectMapper.readValue(exchange.getRequestBody().readAllBytes(), FrontendSearchRequest.class); 
             String frase = frontendSearchRequest.getSearchQuery();
-            String[] palabrasFrase = frase.split(" ");
 
             //Instacia del objeto Aggregator
             Aggregator aggregator = new Aggregator();
@@ -155,11 +153,13 @@ public class WebServer {
                 System.out.println("Valor obtenido: " + result);
                 /* aquí va a recibir las 3 opciones de cada busqueda y va a comprarar las que tengan más incidencias */
             }
-
-            String libro1 ="",libro2="",libro3=""; /* Aquí estan los nombres de los libros que se mostraran  */
+            /* Aquí estan los nombres de los libros que se mostraran  */
             /*FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase, calculateResponse(frase.getBytes()));*/
-            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase, libro1, libro2, libro3);
+        
+            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse();
+
             byte[] responseBytes = objectMapper.writeValueAsBytes(frontendSearchResponse);
+
             sendResponse(responseBytes, exchange);
 
         } catch (IOException e) {
@@ -185,20 +185,7 @@ public class WebServer {
         outputStream.flush();
         outputStream.close();
     }
+    
 
-    //Metodo 'calculateResponse' el cual multiplica los numeros de tipo bigInteger
-    /* private BigInteger calculateResponse(byte[] requestBytes) {
-        String bodyString = new String(requestBytes);
-        String[] stringNumbers = bodyString.split(",");
 
-        BigInteger result = BigInteger.ONE;
-
-        for (String number : stringNumbers) {
-            BigInteger bigInteger = new BigInteger(number);
-            result = result.multiply(bigInteger);
-        }
-        System.out.println("Resultado de la operación: " + result);
-
-        return result;
-    } */
 }

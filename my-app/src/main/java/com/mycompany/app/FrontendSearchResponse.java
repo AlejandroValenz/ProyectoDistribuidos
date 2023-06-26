@@ -1,3 +1,4 @@
+package com.mycompany.app;
 /*
  *  MIT License
  *
@@ -22,26 +23,23 @@
  *  SOFTWARE.
  */
 
-package com.mycompany.app; 
 
-import java.math.BigInteger;
 
 public class FrontendSearchResponse {
-        private String frase;
+        
         private String libro1;
         private String libro2;
         private String libro3;
 
-        public FrontendSearchResponse(String frase, String libro1, String libro2, String libro3) {
-            this.frase = frase;
+         public FrontendSearchResponse ( ) {
+            
+        }
+        public void getNames(String libro1, String libro2, String libro3) {
             this.libro1= libro1;
             this.libro2= libro2;
             this.libro3= libro3;
         }
 
-        public String getfrase() {
-            return frase;
-        }
 
         public String getLibro1() {
             return libro1;
